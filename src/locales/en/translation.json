@@ -1,0 +1,13 @@
+{
+  "welcome": "Welcome to my app!",
+  "greeting": "Hello, {{name}}!",
+  "User cannot be empty": "User cannot be empty",
+  "Password cannot be empty": "Password cannot be empty",
+  "Sign in": "Sign in",
+  "Forgot password?": "Forgot password?",
+  "Don't have an account? Sign Up": "Don't have an account? Sign Up",
+  "Signing In": "Signing In",
+  "We are looking for your user": "We are looking for your user",
+  "User": "User",
+  "Password": "Password"
+}
