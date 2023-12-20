@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import './Login.css';
@@ -22,6 +22,9 @@ import {useTranslation} from "react-i18next";
 import '../../../i18n';
 import {LoadingDialog} from "../../dialogs/LoadingDialog";
 import logo from "../../../logo.svg";
+import {DialogProps} from "@mui/material/Dialog/Dialog";
+import {useNavigate} from 'react-router-dom';
+
 
 function Copyright(props: any) {
     return (<Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -36,6 +39,7 @@ function Copyright(props: any) {
 
 export const Login = () => {
     const {t} = useTranslation();
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -47,6 +51,14 @@ export const Login = () => {
     const [usernameErrors, setUsernameErrors] = useState<string | null>(null);
     const [passwordErrors, setPasswordErrors] = useState<string | null>(null);
 
+    useEffect(() => {
+        const userData = localStorage.getItem('user_data');
+
+        if (!userData) return;
+
+        navigate('/');
+
+    }, [navigate]);
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
@@ -60,7 +72,9 @@ export const Login = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleSignInDialogClose = () => {
+    const handleSignInDialogClose: DialogProps["onClose"] = (event, reason) => {
+        if (reason && reason === "backdropClick")
+            return;
         setSigningIn(false);
     };
 
@@ -96,6 +110,10 @@ export const Login = () => {
             });
 
             console.log('Datos obtenidos con éxito:', response.data);
+
+            localStorage.setItem("user_data", JSON.stringify(response.data));
+
+            navigate('/');
         } catch (error) {
             console.error('Error al obtener datos:', error);
             if (!axios.isAxiosError(error) || error.response?.data == null) {
@@ -112,7 +130,7 @@ export const Login = () => {
 
             setError(errorMessage);
         } finally {
-            //setOpenDialog(false);
+            setSigningIn(false);
         }
     };
 

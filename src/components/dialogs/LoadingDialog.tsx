@@ -19,18 +19,18 @@ export const LoadingDialog: React.FC<LoadingDialogProps> = ({dialogPops, options
         <Dialog {...dialogPops}>
             <DialogContent>
                 <Grid container alignItems="center" spacing={2}>
-                    <Grid item>
-                        <CircularProgress/>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="body2">
+                    <Grid item marginRight="50px">
+                        <Typography variant="h6">
                             {options.title}
                         </Typography>
                         {options.description && (
-                            <Typography variant="body2">
+                            <Typography variant="body2" marginTop="7px">
                                 {options.description}
                             </Typography>
                         )}
+                    </Grid>
+                    <Grid item>
+                        <CircularProgress/>
                     </Grid>
                 </Grid>
             </DialogContent>
